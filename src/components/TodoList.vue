@@ -31,6 +31,10 @@ const addRequest = async () => {
   try {
     const response = await api_todoPost(todoContent.value)
     if (response.ok) {
+      if (todoContent.value.title === '') {
+        alert('不得為空白')
+        return
+      }
       const newItem = {
         userId: 1,
         title: todoContent.value.title,
@@ -139,6 +143,7 @@ const dataFilter = computed(() => {
             @click="setType('Pending')"
           />
         </div>
+        <p class="flex justify-center my-10">{{ `Total：${dataFilter.length}` }}</p>
         <div v-if="isLoading">
           <LoadingItem />
         </div>
