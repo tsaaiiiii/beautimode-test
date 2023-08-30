@@ -1,7 +1,6 @@
-import axios from 'axios'
-
 const api_todoGet = () => {
-  return axios.get(import.meta.env.VITE_API_URL, {
+  return fetch(import.meta.env.VITE_API_URL, {
+    method: 'GET',
     headers: {
       'Content-type': 'application/json; charset=UTF-8'
     }
@@ -9,19 +8,18 @@ const api_todoGet = () => {
 }
 
 const api_todoPost = (content) => {
-  return axios.post(
-    import.meta.env.VITE_API_URL,
-    { content },
-    {
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8'
-      }
+  return fetch(import.meta.env.VITE_API_URL, {
+    method: 'POST',
+    body: JSON.stringify(content),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8'
     }
-  )
+  })
 }
 
 const api_todoDelete = (id) => {
-  return axios.delete(`${import.meta.env.VITE_API_URL}/${id}`, {
+  return fetch(`${import.meta.env.VITE_API_URL}/${id}`, {
+    method: 'DELETE',
     headers: {
       'Content-type': 'application/json; charset=UTF-8'
     }
@@ -29,7 +27,8 @@ const api_todoDelete = (id) => {
 }
 
 const api_todoPatch = (id) => {
-  return axios.patch(`${import.meta.env.VITE_API_URL}/${id}`, {
+  return fetch(`${import.meta.env.VITE_API_URL}/${id}`, {
+    method: 'PATCH',
     headers: {
       'Content-type': 'application/json; charset=UTF-8'
     }

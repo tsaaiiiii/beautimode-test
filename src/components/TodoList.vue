@@ -9,10 +9,15 @@ const isLoading = ref(true)
 const getRequest = async () => {
   try {
     const response = await api_todoGet()
-    data.value = response.data
-    isLoading.value = false
+    if (response.ok) {
+      data.value = await response.json()
+      console.log(data)
+      isLoading.value = false
+    } else {
+      console.error('API request failed:', response.statusText)
+    }
   } catch (error) {
-    console.error(error)
+    console.error('An error occurred:', error)
   }
 }
 onMounted(getRequest)
@@ -25,17 +30,21 @@ const todoContent = ref({
 const addRequest = async () => {
   try {
     const response = await api_todoPost(todoContent.value)
-    console.log(response)
-    data.value.push({
-      userId: 1,
-      title: todoContent.value.title,
-      completed: false,
-      id: `${data.value.length + 1}`
-    })
-    alert('新增成功')
-    todoContent.value = ''
+    if (response.ok) {
+      const newItem = {
+        userId: 1,
+        title: todoContent.value.title,
+        completed: false,
+        id: `${data.value.length + 1}`
+      }
+      data.value.push(newItem)
+      alert('新增成功')
+      todoContent.value.title = ''
+    } else {
+      console.error('API request failed:', response.statusText)
+    }
   } catch (error) {
-    console.log(error)
+    console.error('An error occurred:', error)
   }
 }
 const sentBtn = () => {
@@ -46,9 +55,10 @@ const sentBtn = () => {
 const deleteRequest = async (id) => {
   try {
     const response = await api_todoDelete(id)
-    console.log(response)
-    data.value.splice(`${id - 1}`, 1)
-    alert('刪除成功')
+    if (response.ok) {
+      data.value.splice(`${id - 1}`, 1)
+      alert('刪除成功')
+    }
   } catch (error) {
     console.log(error)
   }
@@ -62,12 +72,14 @@ const patchRequest = async (id) => {
   try {
     const response = await api_todoPatch(id)
     console.log(response)
-    if (data.value[id - 1].completed === false) {
-      data.value[id - 1].completed = true
-      alert('完成！！')
-    } else if (data.value[id - 1].completed === true) {
-      data.value[id - 1].completed = false
-      alert('未完成！')
+    if (response.ok) {
+      if (data.value[id - 1].completed === false) {
+        data.value[id - 1].completed = true
+        alert('完成！！')
+      } else if (data.value[id - 1].completed === true) {
+        data.value[id - 1].completed = false
+        alert('未完成！')
+      }
     }
   } catch (error) {
     console.log(error)
