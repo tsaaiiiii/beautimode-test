@@ -1,20 +1,19 @@
-import { request } from '@/apis/request.js'
+import axios from 'axios'
 
-// 取得-get
 const api_todoGet = () => {
-  return request.get(import.meta.env.VITE_API_URL)
+  return axios.get(import.meta.env.VITE_API_URL)
 }
-// 新增-post
+
 const api_todoPost = (content) => {
-  return request.post(import.meta.env.VITE_API_URL, { content })
+  return axios.post(import.meta.env.VITE_API_URL, { content })
 }
-// 刪除-delete
+
 const api_todoDelete = (id) => {
-  return request.delete(import.meta.env.VITE_API_URL, `${id}`)
+  return axios.delete(`${import.meta.env.VITE_API_URL}/${id}`)
 }
-// 切換-patch
+
 const api_todoPatch = (id) => {
-  return request.patch(import.meta.env.VITE_API_URL, `${id}`)
+  return axios.patch(`${import.meta.env.VITE_API_URL}/${id}`)
 }
 
 export { api_todoGet, api_todoPost, api_todoDelete, api_todoPatch }
