@@ -193,7 +193,7 @@ const daysOfWeek = ['日', '一', '二', '三', '四', '五', '六']
           <select
             id="start-time"
             v-model="selectedStartTime[weekIndex]['week_day' + weekIndex]"
-            class="outline-none"
+            class="outline-none bg-slate-50"
           >
             <option
               v-for="(time, index) in startTiming"
@@ -210,7 +210,7 @@ const daysOfWeek = ['日', '一', '二', '三', '四', '五', '六']
           <select
             id="end-time"
             v-model="selectedEndTime[weekIndex]['week_day' + weekIndex]"
-            class="outline-none"
+            class="outline-none bg=slate-50"
           >
             <option
               v-for="(time, index) in endTiming"
