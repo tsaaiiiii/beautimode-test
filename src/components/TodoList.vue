@@ -14,7 +14,7 @@ const getRequest = async () => {
       console.log(data)
       isLoading.value = false
     } else {
-      console.error('API request failed:', response.statusText)
+      console.error('API request failed:', response.ok)
     }
   } catch (error) {
     console.error('An error occurred:', error)
@@ -45,7 +45,7 @@ const addRequest = async () => {
       alert('新增成功')
       todoContent.value.title = ''
     } else {
-      console.error('API request failed:', response.statusText)
+      console.error('API request failed:', response.ok)
     }
   } catch (error) {
     console.error('An error occurred:', error)
@@ -106,69 +106,67 @@ const dataFilter = computed(() => {
 })
 </script>
 <template>
-  <div>
-    <div class="bg-slate-50 py-40">
-      <div>
-        <div class="flex justify-center gap-2">
-          <input
-            type="text"
-            class="w-1/2 p-1 outline-none bg-slate-50 border-b-[2px] border-slate-950 border-dashed placeholder:text-slate-500"
-            placeholder="What's your plan for today?"
-            v-model="todoContent.title"
-          />
-          <input
-            type="button"
-            class="cursor-pointer hover:font-bold hover:scale-105 hover:bg-[#FFA101] hover:text-white rounded duration-300 border-dashed border border-slate-950 px-2 py-1"
-            value="sent"
-            @click="sentBtn"
-          />
-        </div>
-        <div class="flex gap-10 my-10 justify-center">
-          <input
-            type="button"
-            class="cursor-pointer py-1 bg-[#FAE6B1] w-20 rounded hover:bg-[#FFA101] duration-500 hover:text-white hover:font-bold"
-            value="All"
-            @click="setType('All')"
-          />
-          <input
-            type="button"
-            class="cursor-pointer py-1 bg-[#FAE6B1] w-20 rounded hover:bg-[#FFA101] duration-500 hover:text-white hover:font-bold"
-            value="Finished"
-            @click="setType('Finished')"
-          />
-          <input
-            type="button"
-            class="cursor-pointer py-1 bg-[#FAE6B1] w-20 rounded hover:bg-[#FFA101] duration-500 hover:text-white hover:font-bold"
-            value="Pending"
-            @click="setType('Pending')"
-          />
-        </div>
-        <p class="flex justify-center my-10">{{ `Total：${dataFilter.length}` }}</p>
-        <div v-if="isLoading">
-          <LoadingItem />
-        </div>
-        <div v-else class="flex justify-center">
-          <ul>
-            <li v-for="todo in dataFilter" class="flex gap-4 py-4" :key="todo.id">
-              <p>{{ todo.title }}</p>
-              <div class="flex gap-2">
-                <input
-                  type="checkbox"
-                  class="cursor-pointer"
-                  value="✔"
-                  @click="patchRequest(todo.id)"
-                  v-bind:checked="todo.completed"
-                />
-                <input
-                  type="button"
-                  class="delete cursor-pointer"
-                  value="✘"
-                  @click="deleteItem(todo.id)"
-                />
-              </div>
-            </li>
-          </ul>
-        </div>
+  <div class="bg-slate-50 py-40 text-black">
+    <div>
+      <div class="flex justify-center gap-2">
+        <input
+          type="text"
+          class="w-1/2 p-1 outline-none bg-slate-50 border-b-[2px] border-slate-950 border-dashed placeholder:text-slate-500"
+          placeholder="What's your plan for today?"
+          v-model="todoContent.title"
+        />
+        <input
+          type="button"
+          class="cursor-pointer hover:font-bold hover:scale-105 hover:bg-[#FFA101] hover:text-white rounded duration-300 border-dashed border border-slate-950 px-2 py-1"
+          value="sent"
+          @click="sentBtn"
+        />
+      </div>
+      <div class="flex gap-10 my-10 justify-center">
+        <input
+          type="button"
+          class="cursor-pointer py-1 bg-[#FAE6B1] w-20 rounded hover:bg-[#FFA101] duration-500 hover:text-white hover:font-bold"
+          value="All"
+          @click="setType('All')"
+        />
+        <input
+          type="button"
+          class="cursor-pointer py-1 bg-[#FAE6B1] w-20 rounded hover:bg-[#FFA101] duration-500 hover:text-white hover:font-bold"
+          value="Finished"
+          @click="setType('Finished')"
+        />
+        <input
+          type="button"
+          class="cursor-pointer py-1 bg-[#FAE6B1] w-20 rounded hover:bg-[#FFA101] duration-500 hover:text-white hover:font-bold"
+          value="Pending"
+          @click="setType('Pending')"
+        />
+      </div>
+      <p class="flex justify-center my-10">{{ `Total：${dataFilter.length}` }}</p>
+      <div v-if="isLoading">
+        <LoadingItem />
+      </div>
+      <div v-else class="flex justify-center">
+        <ul>
+          <li v-for="todo in dataFilter" class="flex gap-4 py-4" :key="todo.id">
+            <p>{{ todo.title }}</p>
+            <div class="flex gap-2">
+              <input
+                type="checkbox"
+                class="cursor-pointer"
+                value="✔"
+                @click="patchRequest(todo.id)"
+                v-bind:checked="todo.completed"
+              />
+              <input
+                type="button"
+                class="delete cursor-pointer"
+                value="✘"
+                @click="deleteItem(todo.id)"
+              />
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

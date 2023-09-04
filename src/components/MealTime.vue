@@ -178,7 +178,7 @@ const switchStatus = (weekIndex) => {
 const daysOfWeek = ['日', '一', '二', '三', '四', '五', '六']
 </script>
 <template>
-  <div class="py-40 bg-slate-50">
+  <div class="py-40 bg-slate-50 text-black">
     <div v-for="(week, weekIndex) in daysOfWeek" :key="weekIndex" class="flex gap-4 justify-center">
       <div class="flex w-[500px] gap-5 mb-5">
         <div class="flex gap-2">
